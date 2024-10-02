@@ -1,0 +1,82 @@
+﻿@model FineArt.Models.Data.Submission
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card mx-auto">
+                    <div class="card-body">
+                        <h4 class="card-title">Submit Designs</h4>
+
+                        <form asp-action="Create" method="post" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Compet_Name" class="control-label"></label>
+                                <select asp-for="Compet_Name" class="form-control" asp-items="@(new SelectList(ViewBag.Competitions, "Value", "Text"))">
+                                    <option disabled selected>-- Select Competition --</option>
+                                </select>
+                                <span asp-validation-for="Compet_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Stud_Name" class="control-label"></label>
+                                <input asp-for="Stud_Name" class="form-control" />
+                                <span asp-validation-for="Stud_Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label" ></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SubmissionDate" class="control-label"></label>
+                                <input asp-for="SubmissionDate" disabled class="form-control" />
+                                <span asp-validation-for="SubmissionDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Marks" class="control-label" readonly>Remarks (Staff Only)</label>
+                                <input asp-for="Marks" class="form-control" value="Pending" readonly />
+
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FeedBack" class="control-label">FeedBack (Staff Only)</label>
+                                <input asp-for="FeedBack" class="form-control" placeholder="Area To Need Improvement" value="Pending" readonly />
+                                <span asp-validation-for="FeedBack" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group">
+                                <label asp-for="DIMG" class="control-label"></label>
+                                <input asp-for="Design" class="form-control" />
+                                <span asp-validation-for="Design" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                                <a class=" btn btn-secondary" asp-action="Index">Back to List</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+          
+        </div>
+    </div>
+    <!-- content-wrapper ends -->
+
+</div>
+@* Set the value of the input field to the current date and time *@
+@{
+    var currentDate = DateTime.Now;
+}
+<script>
+    // Get the input element for SubmissionDate
+    var submissionDateInput = document.querySelector('input[name="SubmissionDate"]');
+    // Format the date to be compatible with HTML input type datetime-local
+    var formattedDate = '@currentDate.ToString("yyyy-MM-ddTHH:mm")';
+    // Set the value of the input field to the current date and time
+    submissionDateInput.value = formattedDate;
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

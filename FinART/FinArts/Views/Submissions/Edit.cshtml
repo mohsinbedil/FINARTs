@@ -1,0 +1,81 @@
+﻿@model FineArt.Models.Data.Submission
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card mx-auto">
+                    <div class="card-body ">
+                      
+
+                        <h1>Edit</h1>
+
+                        <h4>Submission</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="Id" />
+                                    <div class="form-group">
+                                        <label asp-for="Compet_Name" class="control-label"></label>
+                                        <input asp-for="Compet_Name" class="form-control" />
+                                        <span asp-validation-for="Compet_Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Stud_Name" class="control-label"></label>
+                                        <input asp-for="Stud_Name" class="form-control" />
+                                        <span asp-validation-for="Stud_Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Description" class="control-label"></label>
+                                        <input asp-for="Description" class="form-control" />
+                                        <span asp-validation-for="Description" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="SubmissionDate" class="control-label"></label>
+                                        <input asp-for="SubmissionDate" class="form-control" />
+                                        <span asp-validation-for="SubmissionDate" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Marks" class="control-label">Remarks (Staff Only)</label>
+                                        <Select asp-for="Marks" class="form-control" readonly="@(User.IsInRole("Student") ? "readonly" : null)">
+                                            <option>Best</option>
+                                            <option>Better</option>
+                                            <option>Good</option>
+                                            <option>Moderate</option>
+                                            <option disabled selected>---Pending---</option>
+                                        </Select>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="FeedBack" class="control-label">FeedBack (Staff Only)</label>
+                                        <input asp-for="FeedBack" class="form-control" placeholder="Area To Need Improvement" value="Pending" readonly="@(User.IsInRole("Student") ? "readonly" : null)" />
+                                        <span asp-validation-for="FeedBack" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DIMG" class="control-label"></label>
+                                        <input asp-for="Design" class="form-control" />
+                                        <span asp-validation-for="Design" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Save" class="btn btn-primary" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div>
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

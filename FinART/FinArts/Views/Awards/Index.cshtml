@@ -1,0 +1,66 @@
+﻿@model IEnumerable<FineArt.Models.Data.Award>
+
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card mx-auto">
+                    <div class="card-body ">
+                        <h4 class="card-title">Awards Details</h4>
+
+<p> @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Staff"))
+       {
+    <a class="btn btn-secondary" asp-action="Create">Create New</a>
+        }
+</p>
+<div class="card-body horizontal-scroll-container">
+<table class="table scroll-item">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Stud_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Competition_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AwardDetails)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stud_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Competition_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwardDetails)
+            </td>
+            <td>
+                 @if (User.IsInRole("Admin") || User.IsInRole("Manager") || User.IsInRole("Staff"))
+                   {
+                <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                   }
+                   else{
+                <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                   }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

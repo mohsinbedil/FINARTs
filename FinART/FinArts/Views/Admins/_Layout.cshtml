@@ -1,0 +1,175 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title> Arts Institute</title>
+    <!-- base:css -->
+    <link rel="stylesheet" href="~/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/vendors/feather/feather.css">
+    <link rel="stylesheet" href="~/vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <!-- endinject -->
+@*     <link rel="shortcut icon" href="~/images/favicon.png" />
+ *@    <style>
+        .horizontal-scroll-container {
+            width: 100%; /* Set the width of the container */
+            overflow-x: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Prevent line breaks */
+        }
+
+        .scroll-item {
+            display: inline-block; /* Make items display inline */
+            width: 200px; /* Set the width of each item */
+            margin-right: 10px; /* Optional: Add spacing between items */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand text-white" asp-controller="Web" asp-action="Index">Arts Institute</a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
+                @* <ul class="navbar-nav mr-lg-2">
+                    <li class="nav-item nav-search d-none d-lg-block">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="search">
+                                    <i class="icon-search"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Search Projects.." aria-label="search" aria-describedby="search">
+                        </div>
+                    </li>
+                </ul> *@
+                <ul class="navbar-nav navbar-nav-right">
+                  
+                    <li class="nav-item dropdown d-lg-flex d-none">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <p class=" text-Dark" id="manage" ><i class="icon-head menu-icon"></i>@UserManager.GetUserName(User)</p>
+                            }
+                        </li>
+                         @if (User.IsInRole("Admin"))
+                          {
+                            <li class="nav-item dropdown d-lg-flex d-none">
+                                <a class="btn btn-secondary" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            </li>
+                          }
+                    <li class="nav-item dropdown d-flex mr-4 ">
+                        <a class="nav-link count-indicator dropdown-toggle d-flex align-items-center justify-content-center" id="notificationDropdown" href="#" data-toggle="dropdown">
+                            <i class="icon-cog"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
+                          
+                            <p class="mb-0 font-weight-normal float-left dropdown-header">
+                                <form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                    <button id="logout" type="submit" class="dropdown-item preview-item"> <i class="icon-inbox"></i>Logout</button>
+                                </form>
+                            </p>
+                        
+                        </div>
+                    </li>
+
+                </ul>
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="icon-menu"></span>
+                </button>
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+
+            <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+
+                <ul class="nav">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Admins" asp-action="Index">
+                                <i class="icon-head menu-icon"></i>
+                                <span class="menu-title">Admin</span>
+                            </a>
+                        </li>
+                    }
+                        @if (User.IsInRole("Staff") || User.IsInRole("Manager") || User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Students" asp-action="Index">
+                                <i class="icon-head menu-icon"></i>
+                                <span class="menu-title">Student</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Exhibitions" asp-action="Index">
+                                <i class="icon-box menu-icon"></i>
+                                <span class="menu-title">Exhibission</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Competitions" asp-action="Index">
+                                <i class="icon-box menu-icon"></i>
+                                <span class="menu-title">Competitions</span>
+                            </a>
+                        </li>
+                    }
+                    <li class="nav-item">
+                            <a class="nav-link" asp-controller="Exhibitions" asp-action="ViewPosting">
+                                <i class="icon-box menu-icon"></i>
+                                <span class="menu-title">Exhibission Posting</span>
+                            </a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Awards" asp-action="Index">
+                                <i class="icon-box menu-icon"></i>
+                                <span class="menu-title">Awards</span>
+                            </a>
+                        </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Submissions" asp-action="Index">
+                            <i class="icon-box menu-icon"></i>
+                            <span class="menu-title">Submissions</span>
+                        </a>
+                    </li>
+                   
+                    
+                    
+                </ul>
+            </nav>
+            <!-- partial -->
+        @RenderBody()
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- base:js -->
+    <script src="~/vendors/base/vendor.bundle.base.js"></script>
+
+    <script src="~/js/off-canvas.js"></script>
+    <script src="~/js/hoverable-collapse.js"></script>
+    <script src="~/js/template.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

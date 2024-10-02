@@ -1,0 +1,81 @@
+﻿@model FineArt.Models.Data.ExhibitionPosting
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card mx-auto">
+                    <div class="card-body ">
+                        <h4 class="card-title">
+                            @{
+                                ViewData["Title"] = "Addposting";
+                            }
+                        </h4>
+
+                        <h1>Addposting</h1>
+
+                        <h4>ExhibitionPosting</h4>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form asp-action="AddPosting" method="post" enctype="multipart/form-data">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="PaintingTitle" class="control-label"></label>
+                                        <input asp-for="PaintingTitle" class="form-control" />
+                                        <span asp-validation-for="PaintingTitle" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Price" class="control-label"></label>
+                                        <input asp-for="Price" class="form-control" />
+                                        <span asp-validation-for="Price" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IsSold" class="control-label"></label>
+                                        <select asp-for="IsSold" class="form-control">
+                                            <option value="Sold">Sold</option>
+                                            <option value="NotSold">Available</option>
+                                        </select>
+                                        <span asp-validation-for="IsSold" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="IsPaidToStudent" class="control-label"></label>
+                                        <select asp-for="IsPaidToStudent" class="form-control">
+                                            <option value="Paid">Paid</option>
+                                            <option value="NotPaid">Not Paid</option>
+                                        </select>
+                                        <span asp-validation-for="IsPaidToStudent" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="AmountPaid" class="control-label"></label>
+                                        <input asp-for="AmountPaid" class="form-control" />
+                                        <span asp-validation-for="AmountPaid" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="EPIMG" class="control-label"></label>
+                                        <input asp-for="EPFILE" class="form-control" />
+                                        <span asp-validation-for="EPFILE" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" value="Create" class="btn btn-primary" />
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+
+                        <div>
+                            <a asp-action="Index">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
